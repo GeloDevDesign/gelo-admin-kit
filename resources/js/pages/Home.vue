@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import Layout from '@/shared/ui/Layout.vue';
-
+import AuthLayout from "@/layouts/AuthLayout.vue";
 </script>
 
-
 <template>
-    <Layout>
+    <AuthLayout title="Dashboard" description="This is where you will see all the analytics">
         <p>Home page</p>
-    </Layout>
+    </AuthLayout>
 </template>

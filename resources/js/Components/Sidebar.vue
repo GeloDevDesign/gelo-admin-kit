@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SidebarItem, { type MenuItem } from "./SidebarItem.vue";
+import SidebarItem, { type MenuItem } from "@/Components/SidebarItem.vue";
 import {
     Home,
     Settings,
@@ -12,7 +12,7 @@ import {
 } from "lucide-vue-next";
 import Swal from "sweetalert2";
 import { router } from "@inertiajs/vue3";
-import { useSideBarStore } from "@/stores/sidebar";
+import { useSideBarStore } from "@/Stores/sidebar";
 
 const sidebar = useSideBarStore();
 
@@ -94,40 +94,6 @@ const menuSections: MenuSection[] = [
                 ],
             },
         ]
-    },
-     {
-        title: "Inventory Management",
-        items: [
-            {
-                label: "My Files",
-                icon: FileText,
-                routeName: "my-files",
-                href: "/my-files",
-                children: [
-                    {
-                        label: "Resume.pdf",
-                        icon: FileText,
-                        href: "/my-files/resume",
-                    },
-                    {
-                        label: "Images",
-                        icon: Image,
-                        children: [
-                            {
-                                label: "Vacation.png",
-                                icon: Image,
-                                href: "/my-files/images/vacation",
-                            },
-                            {
-                                label: "Work.png",
-                                icon: Image,
-                                href: "/my-files/images/work",
-                            },
-                        ],
-                    },
-                ],
-            },
-        ]
     }
 ];
 
@@ -149,9 +115,9 @@ const handleLogout = () => {
 </script>
 
 <template>
-    <div class="drawer-side z-40 is-drawer-close:overflow-visible">
+    <div class="drawer-side z-40 is-drawer-close:overflow-visible border-r border-base-300">
         <label for="my-drawer-4" class="drawer-overlay"></label>
-        <div class="flex h-full max-h-screen flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64 overflow-hidden">
+        <div class="flex h-full max-h-screen flex-col items-start bg-base-100 is-drawer-close:w-14 is-drawer-open:w-64 is-drawer-open:overflow-hidden is-drawer-close:overflow-visible">
             
             <div class="flex-none w-full flex items-center gap-2 px-4 py-4">
                 <div class="avatar">
@@ -162,19 +128,20 @@ const handleLogout = () => {
                 <span class="text-base font-semibold is-drawer-close:hidden">Navbar Title</span>
             </div>
 
-            <div class="flex-1 w-full overflow-y-auto min-h-0">
-                <ul class="menu bg-base-200 text-sm w-full">
+            <div class="flex-1 w-full is-drawer-open:overflow-y-auto is-drawer-close:overflow-visible min-h-0">
+                <ul class="menu bg-base-100 text-sm w-full">
                     
                     <template v-for="(section, index) in menuSections" :key="index">
                         
                         <li 
                             v-if="section.title" 
-                            class="is-drawer-close:hidden px-4 mt-4 mb-2 text-xs font-small text-base-content/50 uppercase tracking-wide"
+                            class="is-drawer-close:hidden px-4 mt-4 mb-2 text-xs font-small text-base-content/50  tracking-wide"
                         >
                             {{ section.title }}
                         </li>
 
                         <SidebarItem
+                            for="my-drawer-4"
                             v-for="item in section.items"
                             :key="item.label"
                             :item="item"

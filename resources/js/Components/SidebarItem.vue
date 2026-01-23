@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { Link } from "@inertiajs/vue3";
-import SidebarItem from "./SidebarItem.vue";
-import { useSideBarStore } from "@/stores/sidebar";
+import SidebarItem from "@/Components/SidebarItem.vue";
+import { useSideBarStore } from "@/Stores/sidebar";
 
 const sidebar = useSideBarStore();
 const childrenRoutes = ref<string[]>([]);
@@ -46,10 +46,19 @@ onMounted(() => {
         :data-tip="item.label"
     >
         <!-- HAS CHILDREN -->
-        <details v-if="item.children" :open="sidebar.hasChildActiveRoutes(childrenRoutes)">
-            <summary class="is-drawer-close:after:hidden">
+        <details
+            v-if="item.children"
+            :open="sidebar.hasChildActiveRoutes(childrenRoutes)"
+        >
+            <summary
+                class="is-drawer-close:after:hidden"
+                :class="
+                    sidebar.hasChildActiveRoutes(childrenRoutes)
+                        ? 'text-primary bg-blue-100 font-medium'
+                        : 'text-secondary'
+                "
+            >
                 <component
-                
                     :is="item.icon"
                     v-if="item.icon"
                     class="h-5 w-5 shrink-0"
@@ -73,8 +82,8 @@ onMounted(() => {
             v-else
             class="is-drawer-close:after:hidden"
             :class="
-                sidebar.hasActiveRoutes(item?.href)
-                    ? 'text-primary font-semibold'
+                sidebar.hasActiveRoutes(item?.href || '')
+                    ? 'text-primary '
                     : 'text-secondary'
             "
         >
