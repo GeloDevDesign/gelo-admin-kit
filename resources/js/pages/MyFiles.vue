@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import Layout from '@/shared/ui/Layout.vue';
-
+import AuthLayout from "@/Layouts/AuthLayout.vue";
 </script>
 
 <template>
-    <Layout>
+    <AuthLayout>
         <p>My Files page</p>
-    </Layout>
+    </AuthLayout>
 </template>
 

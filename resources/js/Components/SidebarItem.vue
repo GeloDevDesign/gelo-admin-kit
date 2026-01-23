@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { Link } from "@inertiajs/vue3";
-import SidebarItem from "./SidebarItem.vue";
-import { useSideBarStore } from "@/stores/sidebar";
+import SidebarItem from "@/Components/SidebarItem.vue";
+import { useSideBarStore } from "@/Stores/sidebar";
 
 const sidebar = useSideBarStore();
 const childrenRoutes = ref<string[]>([]);

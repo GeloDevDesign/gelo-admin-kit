@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import Layout from "../../shared/ui/Layout.vue";
-import { Head } from "@inertiajs/vue3";
-
-defineOptions({ layout: Layout });
+import AuthLayout from "@/Layouts/AuthLayout.vue";
 </script>
 
 <template>
-    <Head title="Backups" />
-    <div class="p-6">
-        <h1 class="text-2xl font-bold mb-4">Backups</h1>
-        <p>Manage system backups and restoration points.</p>
-    </div>
+    <AuthLayout>
+        <div class="p-4">
+            <h1 class="text-2xl font-bold mb-4">Backups</h1>
+            <p>Manage database backups.</p>
+        </div>
+    </AuthLayout>
 </template>
