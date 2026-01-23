@@ -35,9 +35,33 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $segments = $request->segments();
+        $breadcrumbs = [];
+        $url = '';
+
+        // Always add Home
+        $breadcrumbs[] = [
+            'label' => 'Home',
+            'url' => url('/'),
+        ];
+
+        foreach ($segments as $segment) {
+            $url .= '/'.$segment;
+            $label = ucwords(str_replace('-', ' ', $segment));
+            $breadcrumbs[] = [
+                'label' => $label,
+                'url' => url($url),
+            ];
+        }
+
+        // Set last item URL to null
+        if (count($breadcrumbs) > 0) {
+            $breadcrumbs[count($breadcrumbs) - 1]['url'] = null;
+        }
+
         return [
             ...parent::share($request),
-            //
+            'breadcrumbs' => $breadcrumbs,
         ];
     }
 }

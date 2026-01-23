@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/email/verify', [AuthController::class, 'verifyNotice'])->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', [AuthController::class, 'verifyEmail'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
     Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->middleware(['throttle:6,1'])->name('verification.send');
-    
+
     Route::middleware('verified')->group(function () {
         Route::resource('projects', ProjectController::class)->only(['index', 'store', 'update', 'destroy']);
 
@@ -37,15 +37,15 @@ Route::middleware('auth')->group(function () {
         })->name('settings');
 
         Route::get('/settings/user', function () {
-            return Inertia::render('settings/User');
+            return Inertia::render('Settings/User');
         })->name('settings.user');
 
         Route::get('/settings/general', function () {
-            return Inertia::render('settings/General');
+            return Inertia::render('Settings/General');
         })->name('settings.general');
 
         Route::get('/settings/backups', function () {
-            return Inertia::render('settings/Backups');
+            return Inertia::render('Settings/Backups');
         })->name('settings.backups');
 
         Route::get('/my-files', function () {
@@ -53,15 +53,20 @@ Route::middleware('auth')->group(function () {
         })->name('my-files');
 
         Route::get('/my-files/resume', function () {
-            return Inertia::render('my-files/Resume');
+            return Inertia::render('My-files/Resume');
         })->name('my-files.resume');
 
         Route::get('/my-files/images/vacation', function () {
-            return Inertia::render('my-files/images/Vacation');
+            return Inertia::render('My-files/Images/Vacation');
         })->name('my-files.images.vacation');
 
         Route::get('/my-files/images/work', function () {
-            return Inertia::render('my-files/images/Work');
+            return Inertia::render('MyFiles/Images/Work');
         })->name('my-files.images.work');
+
+        // Breadcrumb Test Route
+        Route::get('/deep/nested/level/page', function () {
+            return Inertia::render('Deep/Nested/Level/Page');
+        })->name('deep.test');
     });
 });

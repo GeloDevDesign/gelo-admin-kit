@@ -46,10 +46,19 @@ onMounted(() => {
         :data-tip="item.label"
     >
         <!-- HAS CHILDREN -->
-        <details v-if="item.children" :open="sidebar.hasChildActiveRoutes(childrenRoutes)">
-            <summary class="is-drawer-close:after:hidden">
+        <details
+            v-if="item.children"
+            :open="sidebar.hasChildActiveRoutes(childrenRoutes)"
+        >
+            <summary
+                class="is-drawer-close:after:hidden"
+                :class="
+                    sidebar.hasChildActiveRoutes(childrenRoutes)
+                        ? 'text-primary bg-blue-100 font-medium'
+                        : 'text-secondary'
+                "
+            >
                 <component
-                
                     :is="item.icon"
                     v-if="item.icon"
                     class="h-5 w-5 shrink-0"
@@ -73,8 +82,8 @@ onMounted(() => {
             v-else
             class="is-drawer-close:after:hidden"
             :class="
-                sidebar.hasActiveRoutes(item?.href)
-                    ? 'text-primary font-semibold'
+                sidebar.hasActiveRoutes(item?.href || '')
+                    ? 'text-primary '
                     : 'text-secondary'
             "
         >

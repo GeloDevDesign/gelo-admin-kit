@@ -1,22 +1,26 @@
-<script setup>
-import { Search, File } from 'lucide-vue-next';
+<script setup lang="ts">
+import { Search } from "lucide-vue-next";
+
+interface FilterConfig {
+    items: (string | number)[];
+    enabled: boolean;
+}
+
+defineProps<{
+    filterConfig: FilterConfig;
+}>();
 
 </script>
 
 <template>
-  <label class="input">
-  <Search class="h-[1em] opacity-50" />
-  <input type="search" class="grow" placeholder="Search" />
-  <kbd class="kbd kbd-sm">⌘</kbd>
-  <kbd class="kbd kbd-sm">K</kbd>
-</label>
-<label class="input">
-  <File class="h-[1em] opacity-50" />
-  <input type="text" class="grow" placeholder="index.php" />
-</label>
-<label class="input">
-  Path
-  <input type="text" class="grow" placeholder="src/app/" />
-  <span class="badge badge-neutral badge-xs">Optional</span>
-</label>
+    <div class="flex flex-wrap gap-3">
+        <label v-for="i in 5" :key="i" class="input flex-1 min-w-[200px]">
+            <Search class="h-[1em] opacity-50" />
+            <input type="search" class="grow" placeholder="Search" />
+        </label>
+        <div class="space-x-2"> 
+          <button class="btn btn-error btn-soft">Reset</button>
+          <button class="btn btn-primary btn-soft">Search</button>
+        </div>
+    </div>
 </template>

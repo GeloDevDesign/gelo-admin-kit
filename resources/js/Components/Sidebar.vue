@@ -115,9 +115,9 @@ const handleLogout = () => {
 </script>
 
 <template>
-    <div class="drawer-side z-40 is-drawer-close:overflow-visible">
+    <div class="drawer-side z-40 is-drawer-close:overflow-visible border-r border-base-300">
         <label for="my-drawer-4" class="drawer-overlay"></label>
-        <div class="flex h-full max-h-screen flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64 is-drawer-open:overflow-hidden is-drawer-close:overflow-visible">
+        <div class="flex h-full max-h-screen flex-col items-start bg-base-100 is-drawer-close:w-14 is-drawer-open:w-64 is-drawer-open:overflow-hidden is-drawer-close:overflow-visible">
             
             <div class="flex-none w-full flex items-center gap-2 px-4 py-4">
                 <div class="avatar">
@@ -129,18 +129,19 @@ const handleLogout = () => {
             </div>
 
             <div class="flex-1 w-full is-drawer-open:overflow-y-auto is-drawer-close:overflow-visible min-h-0">
-                <ul class="menu bg-base-200 text-sm w-full">
+                <ul class="menu bg-base-100 text-sm w-full">
                     
                     <template v-for="(section, index) in menuSections" :key="index">
                         
                         <li 
                             v-if="section.title" 
-                            class="is-drawer-close:hidden px-4 mt-4 mb-2 text-xs font-small text-base-content/50 uppercase tracking-wide"
+                            class="is-drawer-close:hidden px-4 mt-4 mb-2 text-xs font-small text-base-content/50  tracking-wide"
                         >
                             {{ section.title }}
                         </li>
 
                         <SidebarItem
+                            for="my-drawer-4"
                             v-for="item in section.items"
                             :key="item.label"
                             :item="item"
