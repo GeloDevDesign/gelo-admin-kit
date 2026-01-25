@@ -2,6 +2,7 @@
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { Mail, LogOut } from "lucide-vue-next";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 
 defineOptions({ layout: GuestLayout });
 
@@ -43,17 +44,16 @@ const logout = () => {
     </div>
 
     <form @submit.prevent="submit">
-        <div class="mt-4 flex items-center justify-between">
-            <button class="btn btn-primary" :disabled="form.processing">
-                <span
-                    v-if="form.processing"
-                    class="loading loading-spinner loading-xs"
-                ></span>
-                <Mail v-else class="w-4 h-4 mr-2" />
-                Resend Verification Email
-            </button>
+        <div class="mt-4 flex flex-col gap-2">
+            <PrimaryButton
+                label="Resend Verification Email"
+                loadingLabel="Sending..."
+                :isLoading="form.processing"
+                :icon="Mail"
+                :isWide="true"
+            />
 
-            <button @click.prevent="logout" class="btn btn-ghost">
+            <button @click.prevent="logout" class="btn btn-ghost w-full">
                 <LogOut class="w-4 h-4 mr-2" />
                 Log Out
             </button>

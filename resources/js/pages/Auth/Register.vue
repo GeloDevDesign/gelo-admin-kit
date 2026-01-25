@@ -3,6 +3,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { UserPlus, User, Mail, Lock } from 'lucide-vue-next';
 import InputFields from '@/Components/InputFields.vue';
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 
 defineOptions({ layout: GuestLayout });
 
@@ -86,11 +87,13 @@ const submit = () => {
         </div>
 
         <div class="form-control mt-6">
-            <button class="btn btn-primary" :disabled="form.processing">
-                <span v-if="form.processing" class="loading loading-spinner loading-xs"></span>
-                <UserPlus v-else class="w-4 h-4 mr-2" />
-                Sign Up
-            </button>
+            <PrimaryButton
+                label="Sign Up"
+                loadingLabel="Signing up..."
+                :isLoading="form.processing"
+                :icon="UserPlus"
+                :isWide="true"
+            />
         </div>
 
         <div class="text-center mt-4">

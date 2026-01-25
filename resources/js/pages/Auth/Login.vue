@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { LogIn, Mail, Lock } from 'lucide-vue-next';
-import InputFields from '@/Components/InputFields.vue';
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import { Head, Link, useForm } from "@inertiajs/vue3";
+import { LogIn, Mail, Lock } from "lucide-vue-next";
+import InputFields from "@/Components/InputFields.vue";
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 
 defineOptions({ layout: GuestLayout });
 
@@ -11,14 +12,14 @@ defineProps<{
 }>();
 
 const form = useForm({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     remember: false,
 });
 
 const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
+    form.post(route("login"), {
+        onFinish: () => form.reset("password"),
     });
 };
 </script>
@@ -31,7 +32,10 @@ const submit = () => {
         <p class="text-base-content/60">Sign in to your account</p>
     </div>
 
-    <div v-if="status" class="mb-4 font-medium text-sm text-success text-center">
+    <div
+        v-if="status"
+        class="mb-4 font-medium text-sm text-success text-center"
+    >
         {{ status }}
     </div>
 
@@ -63,28 +67,40 @@ const submit = () => {
                 </template>
             </InputFields>
             <label class="label">
-                <Link :href="route('password.request')" class="label-text-alt link link-hover">Forgot password?</Link>
+                <Link
+                    :href="route('password.request')"
+                    class="label-text-alt link link-hover"
+                    >Forgot password?</Link
+                >
             </label>
         </div>
 
         <div class="form-control mt-2">
             <label class="label cursor-pointer justify-start gap-2">
-                <input type="checkbox" class="checkbox checkbox-sm" v-model="form.remember" />
+                <input
+                    type="checkbox"
+                    class="checkbox checkbox-sm"
+                    v-model="form.remember"
+                />
                 <span class="label-text">Remember me</span>
             </label>
         </div>
 
         <div class="form-control mt-6">
-            <button class="btn btn-primary" :disabled="form.processing">
-                <span v-if="form.processing" class="loading loading-spinner loading-xs"></span>
-                <LogIn v-else class="w-4 h-4 mr-2" />
-                Log in
-            </button>
+            <PrimaryButton
+                label="Log in"
+                loadingLabel="Logging in..."
+                :isLoading="form.processing"
+                :icon="LogIn"
+                :isWide="true"
+            />
         </div>
 
         <div class="text-center mt-4">
             <span class="text-sm">Don't have an account? </span>
-            <Link :href="route('register')" class="link link-primary text-sm">Sign up</Link>
+            <Link :href="route('register')" class="link link-primary text-sm"
+                >Sign up</Link
+            >
         </div>
     </form>
 </template>

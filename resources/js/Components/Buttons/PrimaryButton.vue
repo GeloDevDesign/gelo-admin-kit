@@ -15,7 +15,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-    <button class="btn btn-primary" :disabled="isLoading">
+    <button class="btn btn-primary" :class="{ 'w-full': isWide }" :disabled="isLoading">
         <span v-if="isLoading" class="loading loading-spinner"></span>
 
         {{ isLoading && loadingLabel ? loadingLabel : label }}
