@@ -171,14 +171,6 @@ Route::get('/users', function () {
 - Always create Form Request classes for validation rather than inline validation in controllers. Include both validation rules and custom error messages.
 - Check sibling Form Requests to see if the application uses array or string based validation rules.
 
-### Repository Pattern
-- Use the Repository Pattern for all data access operations to decouple business logic from data layer implementation.
-- Create a `Repositories` directory under `app/` with subdirectories for each model (e.g., `app/Repositories/ProjectRepository.php`).
-- Define interfaces for all repositories (e.g., `ProjectRepositoryInterface`) to enable dependency injection and testability.
-- Implement repository interfaces using Eloquent (e.g., `EloquentProjectRepository`).
-- When using the Repository Pattern, use **Dependency Injection** (specifically constructor injection) to access the repository in your controllers. Do not instantiate repositories directly.
-- Inject repository interfaces into controllers instead of using direct model access.
-
 ### Queues
 - Use queued jobs for time-consuming operations with the `ShouldQueue` interface.
 
