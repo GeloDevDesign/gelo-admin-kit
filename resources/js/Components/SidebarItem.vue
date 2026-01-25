@@ -54,8 +54,8 @@ onMounted(() => {
                 class="is-drawer-close:after:hidden"
                 :class="
                     sidebar.hasChildActiveRoutes(childrenRoutes)
-                        ? 'text-primary bg-blue-100 font-medium'
-                        : 'text-secondary'
+                        ? 'text-primary font-medium text-sm'
+                        : 'text-sm opacity-60'
                 "
             >
                 <component
@@ -84,14 +84,9 @@ onMounted(() => {
             :class="
                 sidebar.hasActiveRoutes(item?.href || '')
                     ? 'text-primary '
-                    : 'text-secondary'
+                    : 'opacity-60'
             "
         >
-            <component
-                :is="item.icon"
-                v-if="item.icon"
-                class="h-5 w-5 shrink-0"
-            />
             <span class="is-drawer-close:hidden">
                 {{ item.label }}
             </span>

@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Repositories\Project\ProjectRepositoryInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
+    public function __construct(
+        protected ProjectRepositoryInterface $projectRepository
+    ) {}
    
     public function index()
     {
- 
-        return Inertia::render('Home');
+        return Inertia::render('Home', [
+            'projects' => $this->projectRepository->getAll()
+        ]);
     }
 
     // CREATE
@@ -20,16 +25,15 @@ class ProjectController extends Controller
     {
       
         $validated = $request->validate(['name' => 'required|string']);
-        Project::create($validated);
+        $this->projectRepository->create($validated);
         return to_route('projects.index'); 
     }
 
     // UPDATE
     public function update(Request $request, Project $project)
     {
-        dd($request->all());
         $validated = $request->validate(['status' => 'required|string']);
-        $project->update($validated);
+        $this->projectRepository->update($project, $validated);
         
         return to_route('projects.index');
     }
@@ -37,7 +41,7 @@ class ProjectController extends Controller
     // DELETE
     public function destroy(Project $project)
     {
-        $project->delete();
+        $this->projectRepository->delete($project);
         return to_route('projects.index');
     }
 }

@@ -1,38 +1,29 @@
 <script setup lang="ts">
-import type { Component } from 'vue';
+import type { Component } from "vue";
 
-// 1. Interface: PascalCase (Standard for types)
-interface ButtonConfig {
+// defineProps now accepts individual properties
+withDefaults(defineProps<{
     label: string;
     loadingLabel?: string;
     isLoading?: boolean;
     isWide?: boolean;
-    icon?: Component; // Changed from 'string' to 'Component'
-}
-
-// 2. Prop: camelCase (Renamed 'buttonConfig' to 'config' to avoid redundancy)
-defineProps<{
-    config: ButtonConfig;
-}>();
+    icon?: Component;
+}>(), {
+    isLoading: false,
+    isWide: false
+});
 </script>
 
 <template>
-    <button class="btn" :disabled="config.isLoading">
-        <span
-            v-if="config.isLoading"
-            class="loading loading-spinner"
-        ></span>
+    <button class="btn btn-primary" :disabled="isLoading">
+        <span v-if="isLoading" class="loading loading-spinner"></span>
 
-        {{
-            config.isLoading && config.loadingLabel
-                ? config.loadingLabel
-                : config.label
-        }}
+        {{ isLoading && loadingLabel ? loadingLabel : label }}
 
         <component
-            :is="config.icon"
-            v-if="config.icon"
-            class="h-5 w-5 shrink-0 ml-2" 
+            :is="icon"
+            v-if="icon"
+            class="h-5 w-5 shrink-0 ml-2"
         />
     </button>
 </template>

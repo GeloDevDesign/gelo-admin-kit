@@ -44,17 +44,22 @@ const menuSections: MenuSection[] = [
                 children: [
                     {
                         label: "User",
-                        icon: User,
+                        // icon: User,
                         href: "/settings/user",
                     },
                     {
+                        label: "Settings",
+                        // icon: User,
+                        href: "/settings",
+                    },
+                    {
                         label: "General",
-                        icon: Sliders,
+                        // icon: Sliders,
                         href: "/settings/general",
                     },
                     {
                         label: "Backups",
-                        icon: Database,
+                        // icon: Database,
                         href: "/settings/backups",
                     },
                 ],
@@ -72,7 +77,7 @@ const menuSections: MenuSection[] = [
                 children: [
                     {
                         label: "Resume.pdf",
-                        icon: FileText,
+                        // icon: FileText,
                         href: "/my-files/resume",
                     },
                     {
@@ -81,12 +86,12 @@ const menuSections: MenuSection[] = [
                         children: [
                             {
                                 label: "Vacation.png",
-                                icon: Image,
+                                // icon: Image,
                                 href: "/my-files/images/vacation",
                             },
                             {
                                 label: "Work.png",
-                                icon: Image,
+                                // icon: Image,
                                 href: "/my-files/images/work",
                             },
                         ],
@@ -102,6 +107,7 @@ const handleLogout = () => {
         title: "Are you sure?",
         text: "You will be logged out of your account.",
         icon: "warning",
+        theme: 'dark',
         showCancelButton: true,
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
@@ -122,13 +128,13 @@ const handleLogout = () => {
             <div class="flex-none w-full flex items-center gap-2 px-4 py-4">
                 <div class="avatar">
                     <div class="flex size-8 items-center justify-center rounded-full bg-primary text-primary-content">
-                        <span class="text-sm font-bold">G</span>
+                        <span class="text-sm font-bold">AS</span>
                     </div>
                 </div>
-                <span class="text-base font-semibold is-drawer-close:hidden">Navbar Title</span>
+                <span class="text-base font-semibold is-drawer-close:hidden">Gelo Admin Kit</span>
             </div>
 
-            <div class="flex-1 w-full is-drawer-open:overflow-y-auto is-drawer-close:overflow-visible min-h-0">
+            <div class="flex-1 w-full is-drawer-open:overflow-y-auto is-drawer-close:overflow-visible min-h-0 mt-2">
                 <ul class="menu bg-base-100 text-sm w-full">
                     
                     <template v-for="(section, index) in menuSections" :key="index">

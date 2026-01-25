@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import AuthLayout from '@/layouts/AuthLayout.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { UserPlus, User, Mail, Lock } from 'lucide-vue-next';
 
-defineOptions({ layout: AuthLayout });
+defineOptions({ layout: GuestLayout });
 
 const form = useForm({
     name: '',

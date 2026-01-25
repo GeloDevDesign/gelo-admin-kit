@@ -13,6 +13,7 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/framework (LARAVEL) - v12
 - laravel/mcp (MCP) - v0
 - laravel/prompts (PROMPTS) - v0
+- tightenco/ziggy (ZIGGY) - v2
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
 - phpunit/phpunit (PHPUNIT) - v11
