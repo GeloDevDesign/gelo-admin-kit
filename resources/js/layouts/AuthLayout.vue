@@ -6,7 +6,10 @@ import Sidebar from "@/Components/Sidebar.vue";
 import Breadcrumbs from "@/Components/Breadcrumbs.vue";
 import PageHeader from "@/Components/PageHeader.vue";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
-import { PanelLeft, X } from "lucide-vue-next";
+import { PanelRightClose, PanelRightOpen, X } from "lucide-vue-next";
+import { useSideBarStore } from "@/Stores/sidebar";
+
+const sidebar = useSideBarStore();
 
 defineProps<{
     title?: string;
@@ -24,7 +27,7 @@ defineProps<{
                     id="my-drawer-4"
                     type="checkbox"
                     class="drawer-toggle"
-                    checked="true"
+                    v-model="sidebar.isOpen"
                 />
 
                 <div
@@ -39,7 +42,12 @@ defineProps<{
                                     for="my-drawer-4"
                                     class="btn btn-square btn-ghost"
                                 >
-                                    <PanelLeft
+                                    <PanelRightOpen
+                                        v-if="sidebar.isOpen"
+                                        class="my-1.5 inline-block size-4"
+                                    />
+                                    <PanelRightClose
+                                        v-else
                                         class="my-1.5 inline-block size-4"
                                     />
                                 </label>

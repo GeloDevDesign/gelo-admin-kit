@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
 export const useSideBarStore = defineStore("sidebar", () => {
-    const isOpen = ref<boolean>(false);
+    const isOpen = ref<boolean>(true);
 
     function sideBarHover(): void {
         isOpen.value = !isOpen.value;
