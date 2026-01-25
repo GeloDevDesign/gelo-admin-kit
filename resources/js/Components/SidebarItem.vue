@@ -87,11 +87,6 @@ onMounted(() => {
                     : 'opacity-60'
             "
         >
-            <component
-                :is="item.icon"
-                v-if="item.icon"
-                class="h-5 w-5 shrink-0"
-            />
             <span class="is-drawer-close:hidden">
                 {{ item.label }}
             </span>
