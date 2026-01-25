@@ -25,19 +25,19 @@ withDefaults(
 </script>
 
 <template>
-    <div class="flex gap-3 justify-between rounded-lg">
-        <div class="flex gap-2 w-full">
-            <label class="input flex-1 max-w-[400px]">
+    <div class="flex flex-col lg:flex-row gap-4 justify-between rounded-lg">
+        <div class="flex flex-col sm:flex-row gap-2 w-full lg:w-auto lg:flex-1">
+            <label class="input w-full sm:max-w-[400px]">
                 <Search class="h-[1em] opacity-50" />
-                <input type="search" class="grow" />
+                <input type="search" class="grow" placeholder="Search" />
             </label>
-            <div class="space-x-2">
+            <div class="grid grid-cols-2 sm:flex gap-2">
                 <button class="btn btn-error btn-soft">Reset</button>
                 <button class="btn btn-primary btn-soft">Search</button>
             </div>
         </div>
-        <div class="w-full flex justify-end">
-            <form>
+        <div class="w-full lg:w-auto flex justify-start lg:justify-end overflow-x-auto pb-2 lg:pb-0">
+            <form class="flex gap-1 min-w-max">
                 <input
                     class="btn"
                     type="checkbox"

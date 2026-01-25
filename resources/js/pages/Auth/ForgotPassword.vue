@@ -2,6 +2,7 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { Mail, Send } from 'lucide-vue-next';
+import InputFields from '@/Components/InputFields.vue';
 
 defineOptions({ layout: GuestLayout });
 
@@ -36,16 +37,17 @@ const submit = () => {
         </div>
 
         <div class="form-control">
-            <label class="label">
-                <span class="label-text">Email</span>
-            </label>
-            <label class="input input-bordered flex items-center gap-2" :class="{ 'input-error': form.errors.email }">
-                <Mail class="w-4 h-4 opacity-70" />
-                <input type="email" class="grow" placeholder="email@example.com" v-model="form.email" required autofocus />
-            </label>
-            <div v-if="form.errors.email" class="label">
-                <span class="label-text-alt text-error">{{ form.errors.email }}</span>
-            </div>
+            <InputFields
+                label="Email"
+                type="email"
+                v-model="form.email"
+                :errors="form.errors.email"
+                placeholder="email@example.com"
+            >
+                <template #icon>
+                    <Mail class="w-4 h-4 opacity-70" />
+                </template>
+            </InputFields>
         </div>
 
         <div class="form-control mt-6">
