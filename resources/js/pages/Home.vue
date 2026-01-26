@@ -17,7 +17,16 @@ import Table from "@/Components/Tables/Table.vue";
             <PrimaryButton label="Add New Product" :icon="Plus" />
         </template>
         <template #filters>
-            <Filter />
+            <Filter
+                :has-search="true"
+                :has-user-type="true"
+                :data-user-role="[
+                    { label: 'Admin', value: 'admin' },
+                    { label: 'User', value: 'user' },
+                ]"
+                :has-status="true"
+                :has-date="true"
+            />
         </template>
 
         <Table />

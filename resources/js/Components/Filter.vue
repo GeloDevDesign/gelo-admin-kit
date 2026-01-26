@@ -1,63 +1,168 @@
 <script setup lang="ts">
-import { Search } from "lucide-vue-next";
+import { ref } from "vue";
+import { Search, Calendar } from "lucide-vue-next";
+import { router } from "@inertiajs/vue3";
 
-import { Home } from "lucide-vue-next";
-
-interface FilterConfig {
-    items: (string | number)[];
-    enabled: boolean;
+interface Props {
+    hasSearch?: boolean;
+    hasUserType?: boolean;
+    dataUserRole?: Array<{ label: string; value: string | number }>;
+    // New Filters
+    hasStatus?: boolean;
+    dataStatus?: Array<{ label: string; value: string | number }>;
+    hasDate?: boolean;
 }
 
-// 1. Add '?' to make the prop optional
-// 2. Use withDefaults to provide the fallback data
-withDefaults(
-    defineProps<{
-        filterConfig?: FilterConfig;
-    }>(),
-    {
-        // Object defaults must be returned by a function
-        filterConfig: () => ({
-            items: [],
-            enabled: false,
-        }),
-    },
-);
+const props = withDefaults(defineProps<Props>(), {
+    hasSearch: false,
+    hasUserType: false,
+    dataUserRole: () => [],
+    // Defaults for new filters
+    hasStatus: false,
+    dataStatus: () => [
+        // Static data for now as requested
+        { label: "Active", value: "active" },
+        { label: "Inactive", value: "inactive" },
+        { label: "Pending", value: "pending" },
+    ],
+    hasDate: false,
+});
+
+const filters = ref({
+    s: "",
+    user_type: "",
+    status: "",
+    date: "",
+});
+
+const handleApply = () => {
+    // Create a base object
+    const query: Record<string, any> = {};
+
+    // Use Object.assign to merge current non-empty filters
+    if (filters.value.s) {
+        Object.assign(query, { s: filters.value.s });
+    }
+    
+    if (filters.value.user_type) {
+        Object.assign(query, { user_type: filters.value.user_type });
+    }
+
+    if (filters.value.status) {
+        Object.assign(query, { status: filters.value.status });
+    }
+
+    if (filters.value.date) {
+        Object.assign(query, { date: filters.value.date });
+    }
+
+    // Console logger as requested
+    console.log("Data Selected:", query);
+
+    /* 
+    // Commented out router request as requested
+    router.get(route(route.current() as string), query, {
+        preserveState: true,
+        preserveScroll: true,
+        replace: true,
+    }); 
+    */
+};
+
+const handleReset = () => {
+    filters.value.s = "";
+    filters.value.user_type = "";
+    filters.value.status = "";
+    filters.value.date = "";
+    
+    console.log("Filters Reset");
+
+    /*
+    // Clear query params by visiting without them
+    router.get(route(route.current() as string), {}, {
+        preserveState: true,
+        preserveScroll: true,
+    });
+    */
+};
 </script>
 
 <template>
-    <div class="flex flex-col lg:flex-row gap-4 justify-between rounded-lg">
-        <div class="flex flex-col sm:flex-row gap-2 w-full lg:w-auto lg:flex-1">
-            <label class="input w-full sm:max-w-[400px]">
-                <Search class="h-[1em] opacity-50" />
-                <input type="search" class="grow" placeholder="Search" />
-            </label>
-            <div class="grid grid-cols-2 sm:flex gap-2">
-                <button class="btn btn-error btn-soft">Reset</button>
-                <button class="btn btn-primary btn-soft">Search</button>
+    <div class="flex flex-col lg:flex-row gap-4 items-end bg-base-100 p-4 rounded-lg border border-base-200">
+        <!-- Search -->
+        <div v-if="hasSearch" class="form-control w-full sm:max-w-[300px]">
+            <div class="label">
+                <span class="label-text">Search</span>
             </div>
+            <label class="input input-bordered flex items-center gap-2">
+                <Search class="w-4 h-4 opacity-70" />
+                <input
+                    v-model="filters.s"
+                    type="text"
+                    class="grow"
+                    placeholder="Search..."
+                    @keyup.enter="handleApply"
+                />
+            </label>
         </div>
-        <div class="w-full lg:w-auto flex justify-start lg:justify-end overflow-x-auto pb-2 lg:pb-0">
-            <form class="flex gap-1 min-w-max">
+
+        <!-- User Type -->
+        <div v-if="hasUserType" class="form-control w-full sm:max-w-[200px]">
+            <div class="label">
+                <span class="label-text">User Role</span>
+            </div>
+            <select v-model="filters.user_type" class="select select-bordered w-full">
+                <option value="">All Roles</option>
+                <option
+                    v-for="role in dataUserRole"
+                    :key="role.value"
+                    :value="role.value"
+                >
+                    {{ role.label }}
+                </option>
+            </select>
+        </div>
+
+        <!-- Status Filter (New) -->
+        <div v-if="hasStatus" class="form-control w-full sm:max-w-[200px]">
+            <div class="label">
+                <span class="label-text">Status</span>
+            </div>
+            <select v-model="filters.status" class="select select-bordered w-full">
+                <option value="">All Status</option>
+                <option
+                    v-for="status in dataStatus"
+                    :key="status.value"
+                    :value="status.value"
+                >
+                    {{ status.label }}
+                </option>
+            </select>
+        </div>
+
+        <!-- Date Filter (New) -->
+        <div v-if="hasDate" class="form-control w-full sm:max-w-[200px]">
+            <div class="label">
+                <span class="label-text">Date</span>
+            </div>
+            <label class="input input-bordered flex items-center gap-2">
+                <Calendar class="w-4 h-4 opacity-70" />
                 <input
-                    class="btn"
-                    type="checkbox"
-                    name="frameworks"
-                    aria-label="Svelte"
+                    v-model="filters.date"
+                    type="date"
+                    class="grow"
                 />
-                <input
-                    class="btn"
-                    type="checkbox"
-                    name="frameworks"
-                    aria-label="Vue"
-                />
-                <input
-                    class="btn"
-                    type="checkbox"
-                    name="frameworks"
-                    aria-label="React"
-                />
-                <input class="btn btn-square" type="reset" value="×" />
-            </form>
+            </label>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex gap-2 mt-4 lg:mt-0 ml-auto lg:ml-0">
+            <button @click="handleReset" class="btn btn-error btn-soft">
+                Reset
+            </button>
+            <button @click="handleApply" class="btn btn-primary">
+                Search
+            </button>
         </div>
     </div>
 </template>
