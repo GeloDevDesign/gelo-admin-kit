@@ -1,9 +1,10 @@
 {
     "agents": [
-        "trae"
+        "cursor"
     ],
-    "editors": [
-        "trae"
-    ],
-    "guidelines": []
+    "skills": [
+        "mcp-development",
+        "inertia-vue-development",
+        "tailwindcss-development"
+    ]
 }

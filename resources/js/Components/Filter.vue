@@ -3,17 +3,22 @@ import { ref } from "vue";
 import { Search, Calendar } from "lucide-vue-next";
 import { router } from "@inertiajs/vue3";
 
-interface Props {
+interface filterConfig {
+    // for search bar
     hasSearch?: boolean;
+
+    // for user types 
     hasUserType?: boolean;
     dataUserRole?: Array<{ label: string; value: string | number }>;
-    // New Filters
+   
+    // for status filter
     hasStatus?: boolean;
     dataStatus?: Array<{ label: string; value: string | number }>;
+
     hasDate?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<filterConfig>(), {
     hasSearch: false,
     hasUserType: false,
     dataUserRole: () => [],
@@ -27,6 +32,8 @@ const props = withDefaults(defineProps<Props>(), {
     ],
     hasDate: false,
 });
+
+// CODE REVIEW THE FILTERS
 
 const filters = ref({
     s: "",
