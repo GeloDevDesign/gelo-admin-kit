@@ -17,6 +17,8 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', [AuthController::class, 'updatePassword'])->name('password.update');
 });
 
+use App\Http\Controllers\ProfileController;
+
 // Authenticated Routes
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
@@ -26,6 +28,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/email/verification-notification', [AuthController::class, 'verifyHandler'])->middleware(['throttle:6,1'])->name('verification.send');
 
     Route::middleware('verified')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
+        Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('avatar.update');
+
         Route::resource('projects', ProjectController::class)->only(['index', 'store', 'update', 'destroy']);
 
         Route::get('/', function () {

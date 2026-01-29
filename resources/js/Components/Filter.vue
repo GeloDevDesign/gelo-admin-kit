@@ -13,7 +13,7 @@ interface filterConfig {
    
     // for status filter
     hasStatus?: boolean;
-    dataStatus?: Array<{ label: string; value: string | number }>;
+    dataStatus?: Array<{ label: string; value: string | number }>; // Vue SFC TypeScript prop: array of objects with label/value pairs
 
     hasDate?: boolean;
 }
