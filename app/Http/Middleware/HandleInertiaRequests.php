@@ -62,7 +62,11 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user() ? $request->user()->load(['roles' => function ($query) {
+                    $query->select('id', 'name', 'label')->with(['permissions' => function ($query) {
+                        $query->select('id', 'name', 'label');
+                    }]);
+                }]) : null,
             ],
             'breadcrumbs' => $breadcrumbs,
         ];
