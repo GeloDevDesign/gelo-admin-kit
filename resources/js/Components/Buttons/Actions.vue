@@ -1,24 +1,33 @@
 <script setup lang="ts">
 import { Pencil, Trash2 } from "lucide-vue-next";
 
-withDefaults(
+interface ButtonConfig {
+    hasEdit?: boolean;
+    hasDelete?: boolean;
+}
+
+const props = withDefaults(
     defineProps<{
-        edit?: boolean;
-        delete?: boolean;
+        buttonConfig?: ButtonConfig;
     }>(),
     {
-        edit: true,
-        delete: true,
-    }
+        buttonConfig: () => ({
+            hasEdit: true,
+            hasDelete: true,
+        }),
+    },
 );
 
-defineEmits(["edit", "delete"]);
+defineEmits<{
+    edit: [];
+    delete: [];
+}>();
 </script>
 
 <template>
     <div class="flex items-center gap-1">
         <button
-            v-if="edit"
+            v-if="props.buttonConfig?.hasEdit"
             class="btn btn-sm btn-square btn-ghost text-warning tooltip"
             data-tip="Edit"
             @click="$emit('edit')"
@@ -26,7 +35,7 @@ defineEmits(["edit", "delete"]);
             <Pencil class="size-4" />
         </button>
         <button
-            v-if="delete"
+            v-if="props.buttonConfig?.hasDelete"
             class="btn btn-sm btn-square btn-ghost text-error tooltip"
             data-tip="Delete"
             @click="$emit('delete')"

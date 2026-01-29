@@ -2,6 +2,8 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { Key, Mail, Lock } from 'lucide-vue-next';
+import InputFields from '@/Components/InputFields.vue';
+import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";
 
 defineOptions({ layout: GuestLayout });
 
@@ -34,50 +36,55 @@ const submit = () => {
 
     <form @submit.prevent="submit">
         <div class="form-control">
-            <label class="label">
-                <span class="label-text">Email</span>
-            </label>
-            <label class="input input-bordered flex items-center gap-2" :class="{ 'input-error': form.errors.email }">
-                <Mail class="w-4 h-4 opacity-70" />
-                <input type="email" class="grow" placeholder="email@example.com" v-model="form.email" required autofocus />
-            </label>
-            <div v-if="form.errors.email" class="label">
-                <span class="label-text-alt text-error">{{ form.errors.email }}</span>
-            </div>
+            <InputFields
+                label="Email"
+                type="email"
+                v-model="form.email"
+                :errors="form.errors.email"
+                placeholder="email@example.com"
+            >
+                <template #icon>
+                    <Mail class="w-4 h-4 opacity-70" />
+                </template>
+            </InputFields>
         </div>
 
         <div class="form-control mt-4">
-            <label class="label">
-                <span class="label-text">Password</span>
-            </label>
-            <label class="input input-bordered flex items-center gap-2" :class="{ 'input-error': form.errors.password }">
-                <Lock class="w-4 h-4 opacity-70" />
-                <input type="password" class="grow" placeholder="••••••••" v-model="form.password" required />
-            </label>
-            <div v-if="form.errors.password" class="label">
-                <span class="label-text-alt text-error">{{ form.errors.password }}</span>
-            </div>
+            <InputFields
+                label="Password"
+                type="password"
+                v-model="form.password"
+                :errors="form.errors.password"
+                placeholder="••••••••"
+            >
+                <template #icon>
+                    <Lock class="w-4 h-4 opacity-70" />
+                </template>
+            </InputFields>
         </div>
 
         <div class="form-control mt-4">
-            <label class="label">
-                <span class="label-text">Confirm Password</span>
-            </label>
-            <label class="input input-bordered flex items-center gap-2" :class="{ 'input-error': form.errors.password_confirmation }">
-                <Lock class="w-4 h-4 opacity-70" />
-                <input type="password" class="grow" placeholder="••••••••" v-model="form.password_confirmation" required />
-            </label>
-            <div v-if="form.errors.password_confirmation" class="label">
-                <span class="label-text-alt text-error">{{ form.errors.password_confirmation }}</span>
-            </div>
+            <InputFields
+                label="Confirm Password"
+                type="password"
+                v-model="form.password_confirmation"
+                :errors="form.errors.password_confirmation"
+                placeholder="••••••••"
+            >
+                <template #icon>
+                    <Lock class="w-4 h-4 opacity-70" />
+                </template>
+            </InputFields>
         </div>
 
         <div class="form-control mt-6">
-            <button class="btn btn-primary" :disabled="form.processing">
-                <span v-if="form.processing" class="loading loading-spinner loading-xs"></span>
-                <Key v-else class="w-4 h-4 mr-2" />
-                Reset Password
-            </button>
+            <PrimaryButton
+                label="Reset Password"
+                loadingLabel="Resetting..."
+                :isLoading="form.processing"
+                :icon="Key"
+                :isWide="true"
+            />
         </div>
     </form>
 </template>

@@ -1,0 +1,36 @@
+# 🎯 Roadmap
+
+## 1. RBAC (High Priority)
+- [ ] **DB**: `roles` & `permissions` tables (Spatie).
+- [ ] **Logic**: Middleware & Policies.
+- [ ] **UI**: Role-based navigation & button visibility.
+
+## 2. User Management
+- [ ] **Pages**:
+  - `/users` (List)
+  - `/users/create`
+  - `/users/{id}/edit`
+  - `/profile`
+- [ ] **Features**: Search, Filter, Soft Delete, Avatar.
+
+## 3. Data & Backup
+- [ ] **Import/Export**: Excel/CSV support.
+- [ ] **Backup**: Scheduled daily dumps + Admin download.
+
+---
+
+## 🛠 Suggestions
+- **Dashboard**: KPI Cards, Charts, Recent Activity.
+- **Notifications**: In-app alerts, Toasts, Email digests.
+- **Logs**: Audit trail for critical actions.
+- **Settings**: Site config & Feature flags.
+
+---
+
+## 🔮 Future
+- [ ] API Tokens
+- [ ] Impersonation
+- [ ] Dark Mode
+- [ ] Multi-Language
+- [ ] File Manager
+- [ ] 2FA

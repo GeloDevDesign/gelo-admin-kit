@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { Component } from "vue";
 
-// defineProps now accepts individual properties
 withDefaults(defineProps<{
     label: string;
     loadingLabel?: string;
@@ -15,7 +14,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-    <button class="btn btn-primary" :class="{ 'w-full': isWide }" :disabled="isLoading">
+    <button class="btn btn-secondary" :class="{ 'w-full': isWide }" :disabled="isLoading">
         <span v-if="isLoading" class="loading loading-spinner"></span>
 
         {{ isLoading && loadingLabel ? loadingLabel : label }}
