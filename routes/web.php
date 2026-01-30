@@ -43,9 +43,6 @@ Route::middleware('auth')->group(function () {
             return Inertia::render('Settings');
         })->name('settings');
 
-        Route::get('/settings/user', function () {
-            return Inertia::render('Settings/User');
-        })->name('settings.user');
 
         Route::get('/settings/general', function () {
             return Inertia::render('Settings/General');
@@ -77,3 +74,6 @@ Route::middleware('auth')->group(function () {
         })->name('deep.test');
     });
 });
+
+require __DIR__.'/settings.php';
+

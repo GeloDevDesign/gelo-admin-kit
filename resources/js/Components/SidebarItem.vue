@@ -1,43 +1,28 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { Link } from "@inertiajs/vue3";
 import SidebarItem from "@/Components/SidebarItem.vue";
 import { useSideBarStore } from "@/Stores/sidebar";
+import { MenuItem } from "@/types";
 
 const sidebar = useSideBarStore();
 const childrenRoutes = ref<string[]>([]);
 
-export interface MenuItem {
-    label: string;
-    icon?: any;
-    toolTipName?: string;
-    children?: MenuItem[];
-    isOpen?: boolean;
-    routeName?: string;
-    href?: string;
-}
-
 const props = defineProps<{ item: MenuItem }>();
 
-function getAllChildrenRoutes(item: MenuItem): string[] {
-    let routes: string[] = [];
+const childRoutes = computed<string[]>(() => {
+    if (!props.item.children) return [];
 
-    if (item.children) {
-        for (const child of item.children) {
-            if (child.href) routes.push(child.href);
-
-            if (child.children) {
-                routes = routes.concat(getAllChildrenRoutes(child));
-            }
-        }
-    }
-
-    return routes;
-}
-
-onMounted(() => {
-    childrenRoutes.value = getAllChildrenRoutes(props.item);
+    return props.item.children
+        .map((child) => child.route)
+        .filter((route) => route !== undefined);
 });
+
+const isOpen = computed(() => {
+    return sidebar.hasActiveChildRoutes(childRoutes.value);
+});
+
+
 </script>
 
 <template>
@@ -46,18 +31,16 @@ onMounted(() => {
         :data-tip="item.label"
     >
         <!-- HAS CHILDREN -->
-        <details
-            v-if="item.children"
-            :open="sidebar.hasChildActiveRoutes(childrenRoutes)"
-        >
+        <details v-if="item.children" :open="isOpen">
             <summary
                 class="is-drawer-close:after:hidden"
                 :class="
-                    sidebar.hasChildActiveRoutes(childrenRoutes)
+                    isOpen
                         ? 'text-primary font-medium text-sm'
                         : 'text-sm opacity-60'
                 "
             >
+                <!-- {{ item }} -->
                 <component
                     :is="item.icon"
                     v-if="item.icon"
@@ -78,11 +61,11 @@ onMounted(() => {
         </details>
 
         <Link
-            :href="item.href"
+            :href="item?.route"
             v-else
             class="is-drawer-close:after:hidden"
             :class="
-                sidebar.hasActiveRoutes(item?.href || '')
+                sidebar.hasActiveRoutes(item?.route)
                     ? 'text-primary '
                     : 'opacity-60'
             "

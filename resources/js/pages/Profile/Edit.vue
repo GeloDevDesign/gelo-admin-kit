@@ -65,7 +65,7 @@ const handleAvatarChange = (e: Event) => {
 
 <template>
     <AuthLayout title="Profile" description="Manage your profile settings.">
-        <div class="tabs tabs-box">
+        <div class="tabs tabs-border">
             <input
                 type="radio"
                 name="profile_tabs"
@@ -192,7 +192,7 @@ const handleAvatarChange = (e: Event) => {
                 aria-label="Security"
             />
             <div class="tab-content bg-base-100 border-base-300 p-6">
-                <div class="max-w-xl mx-auto">
+                <div class="">
                     <h2 class="text-lg font-medium mb-4">Update Password</h2>
                     <p class="text-sm text-base-content/70 mb-6">
                         Ensure your account is using a long, random password to

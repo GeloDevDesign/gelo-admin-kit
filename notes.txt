@@ -1,7 +1,13 @@
 # 🎯 Roadmap
 
 # REVIEW CODE 
+- sidebar.ts file 
+- review global index
 - ProfileController 
+- Filter logic Component 
+- UserController 
+- fix naming convention on sidebar
+- fix HEADER
 
 ## 1. RBAC (High Priority)
 - [ ] **DB**: `roles` & `permissions` tables (Spatie).

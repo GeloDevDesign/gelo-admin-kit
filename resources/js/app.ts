@@ -8,6 +8,7 @@ import { ZiggyVue } from 'ziggy-js';
 
 
 createInertiaApp({ 
+  title: title => `${title} - Admin Kit`,
   resolve: name => {
     const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue', { eager: true });
     return pages[`./pages/${name}.vue`];
