@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref,computed } from "vue";
 import { Search, Calendar } from "lucide-vue-next";
 import { router } from "@inertiajs/vue3";
 
@@ -66,14 +66,14 @@ const handleApply = () => {
     // Console logger as requested
     console.log("Data Selected:", query);
 
-    /* 
+    // alert('test');
     // Commented out router request as requested
-    router.get(route(route.current() as string), query, {
+    router.get(route(route().current() as string), query, {
         preserveState: true,
         preserveScroll: true,
         replace: true,
     }); 
-    */
+    
 };
 
 const handleReset = () => {
@@ -84,13 +84,11 @@ const handleReset = () => {
     
     console.log("Filters Reset");
 
-    /*
     // Clear query params by visiting without them
-    router.get(route(route.current() as string), {}, {
+    router.get(route(route().current() as string), {}, {
         preserveState: true,
         preserveScroll: true,
     });
-    */
 };
 </script>
 
@@ -108,7 +106,6 @@ const handleReset = () => {
                     type="text"
                     class="grow"
                     placeholder="Search..."
-                    @keyup.enter="handleApply"
                 />
             </label>
         </div>
@@ -167,7 +164,7 @@ const handleReset = () => {
             <button @click="handleReset" class="btn btn-error btn-soft">
                 Reset
             </button>
-            <button @click="handleApply" class="btn btn-primary">
+            <button @click="handleApply" class="btn btn-primary btn-soft">
                 Search
             </button>
         </div>

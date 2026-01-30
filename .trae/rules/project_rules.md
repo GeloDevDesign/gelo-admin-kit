@@ -159,7 +159,7 @@ Route::get('/users', function () {
 - Always use proper Eloquent relationship methods with return type hints. Prefer relationship methods over raw queries or manual joins.
 - Use Eloquent models and relationships before suggesting raw database queries.
 - Avoid `DB::`; prefer `Model::query()`. Generate code that leverages Laravel's ORM capabilities rather than bypassing them.
-- Generate code that prevents N+1 query problems by using eager loading.
+- Generate code that prevents N+1 query problems by using eager loading (`with()` or `load()`).
 - Use Laravel's query builder for very complex database operations.
 
 ### Model Creation

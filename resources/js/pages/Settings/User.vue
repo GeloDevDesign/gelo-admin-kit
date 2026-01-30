@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AuthLayout from "@/layouts/AuthLayout.vue";
+import AuthLayout from "@/Layouts/AuthLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { Plus } from "lucide-vue-next";
 import PrimaryButton from "@/Components/Buttons/PrimaryButton.vue";

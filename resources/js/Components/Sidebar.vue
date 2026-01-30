@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SidebarItem, { type MenuItem } from "@/Components/SidebarItem.vue";
+import SidebarItem from "@/Components/SidebarItem.vue";
 import {
     Home,
     Settings,
@@ -13,13 +13,9 @@ import {
 import Swal from "sweetalert2";
 import { router } from "@inertiajs/vue3";
 import { useSideBarStore } from "@/Stores/sidebar";
+import { MenuItem, MenuSection } from "@/types";
 
 const sidebar = useSideBarStore();
-
-interface MenuSection {
-    title?: string;
-    items: MenuItem[];
-}
 
 const menuSections: MenuSection[] = [
     {
@@ -28,7 +24,7 @@ const menuSections: MenuSection[] = [
                 label: "Homepage",
                 icon: Home,
                 routeName: "home",
-                href: "/",
+                route: route('home'),
             },
         ]
     },
@@ -38,29 +34,30 @@ const menuSections: MenuSection[] = [
             {
                 label: "Settings",
                 icon: Settings,
-                routeName: "settings",
-                href: "/settings",
+                routeName: "settings.user",
+                route: route('settings.users.index'),
                 isOpen: true,
                 children: [
                     {
                         label: "User",
                         // icon: User,
-                        href: "/settings/user",
+                        route: route('settings.users.index'),
+                        
                     },
                     {
                         label: "Settings",
                         // icon: User,
-                        href: "/settings",
+                        route: route('settings'),
                     },
                     {
                         label: "General",
                         // icon: Sliders,
-                        href: "/settings/general",
+                        route: route('settings.general'),
                     },
                     {
                         label: "Backups",
                         // icon: Database,
-                        href: "/settings/backups",
+                        route: route('settings.backups'),
                     },
                 ],
             },
@@ -73,12 +70,12 @@ const menuSections: MenuSection[] = [
                 label: "My Files",
                 icon: FileText,
                 routeName: "my-files",
-                href: "/my-files",
+                route: route('my-files'),
                 children: [
                     {
                         label: "Resume.pdf",
                         // icon: FileText,
-                        href: "/my-files/resume",
+                        route: route('my-files.resume'),
                     },
                     {
                         label: "Images",
@@ -87,12 +84,12 @@ const menuSections: MenuSection[] = [
                             {
                                 label: "Vacation.png",
                                 // icon: Image,
-                                href: "/my-files/images/vacation",
+                                route: route('my-files.images.vacation'),
                             },
                             {
                                 label: "Work.png",
                                 // icon: Image,
-                                href: "/my-files/images/work",
+                                route: route('my-files.images.work'),
                             },
                         ],
                     },

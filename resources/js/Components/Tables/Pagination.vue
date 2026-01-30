@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import { Link } from "@inertiajs/vue3";
+import { PaginationData } from "@/types";
 
-interface LinkItem {
-    url: string | null;
-    label: string;
-    active: boolean;
-}
-
-interface PaginationData {
-    current_page: number;
-    last_page: number;
-    links: LinkItem[];
-    total: number;
-}
-
-defineProps<{
-    data: PaginationData;
-}>();
+withDefaults(
+    defineProps<{
+        data?: PaginationData;
+    }>(),
+    {
+        data: () => ({
+            current_page: 1,
+            last_page: 1,
+            links: [],
+            total: 0,
+            data: [],
+        }),
+    },
+);
 </script>
 
 <template>
