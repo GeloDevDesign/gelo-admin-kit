@@ -135,8 +135,10 @@ This project uses a secure directory structure to isolate the Laravel core code 
 To enhance security, the application files are moved outside `public_html`.
 
 * **Root Path:** `/home/uXXXX/domains/domain.com/`
-* **Core Application:** `your_folder_name/` (Contains `.env`, `app`, `vendor`, etc.)
+* **Core Application:** `your_custom_core_folder/` (Contains `.env`, `app`, `vendor`, etc.)
 * **Public Access:** `public_html/` (Contains `index.php`, `.htaccess`, `build`, and `storage` symlink)
+
+**Note:** `your_custom_core_folder` is a placeholder. You can name this directory whatever you prefer (e.g., `laravel_core`, `backend`, `app_core`), but ensure you update the references in `index.php` and `deploy.sh` accordingly.
 
 **Rule:** Never place `.env` or core logic files inside `public_html`.
 
@@ -151,8 +153,8 @@ The entry point must point to the isolated core and register the custom public p
 use Illuminate\Http\Request;
 
 // 1. Point to the secure core directory
-require __DIR__.'/../your_folder_name/vendor/autoload.php';
-$app = require_once __DIR__.'/../your_folder_name/bootstrap/app.php';
+require __DIR__.'/../your_custom_core_folder/vendor/autoload.php';
+$app = require_once __DIR__.'/../your_custom_core_folder/bootstrap/app.php';
 
 // 2. Register the public path for Inertia/Vite to find assets
 $app->usePublicPath(__DIR__);
@@ -176,7 +178,7 @@ Use the standard Laravel `.htaccess` to handle routing.
 Since the directory structure is custom, the default `php artisan storage:link` command will not work correctly. Use SSH to create the link manually.
 
 ```bash
-ln -s /path/to/your_folder_name/storage/app/public /path/to/public_html/storage
+ln -s /path/to/your_custom_core_folder/storage/app/public /path/to/public_html/storage
 ```
 
 ### 4. Asset Deployment
@@ -188,8 +190,74 @@ Since the project uses Inertia/Vue:
 
 ### 5. Troubleshooting
 *   **404 on Assets:** Check if `$app->usePublicPath(__DIR__);` is present in `index.php`.
-*   **Images not loading:** Verify permissions on `your_folder_name/storage` are set to `775`.
-*   **500 Error:** Ensure PHP version is 8.2+ and `.env` exists in `your_folder_name`.
+*   **Images not loading:** Verify permissions on `your_custom_core_folder/storage` are set to `775`.
+*   **500 Error:** Ensure PHP version is 8.2+ and `.env` exists in `your_custom_core_folder`.
 
 ### 💡 Best Practice Tip
 Always keep a local backup of your modified `public_html/index.php` and `.htaccess`. When you deploy updates via Git or FTP, be careful not to overwrite `index.php` with the default Laravel version, or your site will break.
+
+---
+
+## 🚀 Automated Deployment Guide (Hostinger)
+
+This project uses a custom bash script (`deploy.sh`) to automate the deployment process on Hostinger shared hosting. This ensures that core files remain secure while public assets are correctly synced.
+
+### 1. Server Architecture
+The project is split into two directories for security:
+
+* **`~/domains/domain.com/your_custom_core_folder`**: Contains the Git repository, `.env`, and backend logic. (Not accessible to the public).
+* **`~/domains/domain.com/public_html`**: Contains the entry point (`index.php`) and compiled frontend assets (`build/`).
+
+### 2. The Deployment Script
+The `deploy.sh` script performs the following actions automatically:
+1.  **Git Pull:** Fetches the latest code into `your_custom_core_folder`.
+2.  **Composer Install:** Installs/updates PHP dependencies.
+3.  **Migrate:** Runs database migrations (`--force`).
+4.  **Sync Assets:** Copies compiled JS/CSS from `your_custom_core_folder/public` to `public_html`, **skipping** the custom `index.php` and `.htaccess`.
+5.  **Clear Cache:** Clears and rebuilds config/route/view caches.
+
+### 3. Workflow: How to Deploy
+
+#### Step A: On Local Machine
+1.  Make your changes.
+2.  **Build Assets:** Since shared hosting has low RAM, build frontend assets locally.
+    ```bash
+    npm run build
+    ```
+3.  **Commit & Push:** Ensure the `public/build` folder is included in your commit.
+    ```bash
+    git add .
+    git commit -m "feat: updates"
+    git push origin main
+    ```
+
+#### Step B: On Server (Hostinger)
+1.  Connect via SSH:
+    ```bash
+    ssh uXXXXXXX@yourdomain.com -p 65002
+    ```
+2.  Run the deploy script:
+    ```bash
+    ./deploy.sh
+    ```
+
+### 4. Setup & Maintenance
+
+#### Creating the Script (If lost)
+Create a file named `deploy.sh` in your domain root folder and paste the bash script content.
+
+#### Fixing Permissions
+If you get a **"Permission denied"** error:
+```bash
+chmod +x deploy.sh
+```
+
+#### Fixing Windows Line Endings ("bad interpreter" error)
+If you edited the file on Windows and uploaded it, you might see a `/bin/bash^M: bad interpreter` error. Fix it by running:
+```bash
+sed -i 's/\r$//' deploy.sh
+```
+
+### 5. Important Notes
+*   **Do Not Overwrite `public_html/index.php`:** The script is configured to exclude this file during sync. If you need to update `index.php`, do it manually via File Manager.
+*   **Env File:** The `.env` file lives in `your_custom_core_folder/`.

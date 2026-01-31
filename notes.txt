@@ -8,6 +8,7 @@
 - UserController 
 - fix naming convention on sidebar
 - fix HEADER
+-try to automated deployment with github actions or other solution;
 
 ## 1. RBAC (High Priority)
 - [ ] **DB**: `roles` & `permissions` tables (Spatie).
