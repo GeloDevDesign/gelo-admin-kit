@@ -125,4 +125,71 @@ Follow these steps to set up the project locally:
 
 Visit `http://localhost:8000` in your browser.
 
+---
 
+## 🌍 Production Deployment (Hostinger Shared Hosting)
+
+This project uses a secure directory structure to isolate the Laravel core code from the public-facing web directory.
+
+### 1. Directory Structure
+To enhance security, the application files are moved outside `public_html`.
+
+* **Root Path:** `/home/uXXXX/domains/domain.com/`
+* **Core Application:** `your_folder_name/` (Contains `.env`, `app`, `vendor`, etc.)
+* **Public Access:** `public_html/` (Contains `index.php`, `.htaccess`, `build`, and `storage` symlink)
+
+**Rule:** Never place `.env` or core logic files inside `public_html`.
+
+### 2. Configuration Files
+
+#### A. `public_html/index.php`
+The entry point must point to the isolated core and register the custom public path.
+
+```php
+<?php
+
+use Illuminate\Http\Request;
+
+// 1. Point to the secure core directory
+require __DIR__.'/../your_folder_name/vendor/autoload.php';
+$app = require_once __DIR__.'/../your_folder_name/bootstrap/app.php';
+
+// 2. Register the public path for Inertia/Vite to find assets
+$app->usePublicPath(__DIR__);
+
+$app->handleRequest(Request::capture());
+```
+
+#### B. `public_html/.htaccess`
+Use the standard Laravel `.htaccess` to handle routing.
+
+```apache
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+```
+
+### 3. Storage Symlink (SSH)
+Since the directory structure is custom, the default `php artisan storage:link` command will not work correctly. Use SSH to create the link manually.
+
+```bash
+ln -s /path/to/your_folder_name/storage/app/public /path/to/public_html/storage
+```
+
+### 4. Asset Deployment
+Since the project uses Inertia/Vue:
+
+1.  Run `npm run build` locally.
+2.  Upload the generated `build` folder to `public_html/build`.
+3.  Ensure `manifest.json` exists at `public_html/build/manifest.json`.
+
+### 5. Troubleshooting
+*   **404 on Assets:** Check if `$app->usePublicPath(__DIR__);` is present in `index.php`.
+*   **Images not loading:** Verify permissions on `your_folder_name/storage` are set to `775`.
+*   **500 Error:** Ensure PHP version is 8.2+ and `.env` exists in `your_folder_name`.
+
+### 💡 Best Practice Tip
+Always keep a local backup of your modified `public_html/index.php` and `.htaccess`. When you deploy updates via Git or FTP, be careful not to overwrite `index.php` with the default Laravel version, or your site will break.
