@@ -35,7 +35,7 @@ const menuSections: MenuSection[] = [
                 label: "Settings",
                 icon: Settings,
                 routeName: "settings.user",
-                route: route('settings.users.index'),
+                // route: route('settings.users.index'),
                 isOpen: true,
                 children: [
                     {
